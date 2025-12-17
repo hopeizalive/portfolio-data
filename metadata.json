@@ -1,0 +1,7 @@
+{
+  "name": "Adil Rajput Portfolio",
+  "description": "Portfolio of Adil Rajput - System Analyst and Team Lead specializing in Java, .NET, and Full Stack Development.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
