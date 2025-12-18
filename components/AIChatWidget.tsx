@@ -1,10 +1,11 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Sparkles, Loader2, User, Bot, Mic, MicOff, Volume2 } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { sendMessageToGemini } from '../services/geminiService';
 import { GoogleGenAI, LiveServerMessage, Modality } from "@google/genai";
 import { SYSTEM_PROMPT } from '../constants';
-import { float32ToPCM16, arrayBufferToBase64, decodeAudioData } from '../utils/audioUtils';
+import { float32ToPCM16, encode, decode, decodeAudioData } from '../utils/audioUtils';
 
 const AIChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +53,7 @@ const AIChatWidget: React.FC = () => {
 
   const stopVoiceSession = () => {
     if (sessionRef.current) {
-      sessionRef.current.close(); // Assuming close method exists or just drop ref
+      sessionRef.current.close();
       sessionRef.current = null;
     }
 
@@ -70,7 +71,9 @@ const AIChatWidget: React.FC = () => {
     }
     
     // Stop playing audio
-    activeSourcesRef.current.forEach(source => source.stop());
+    activeSourcesRef.current.forEach(source => {
+      try { source.stop(); } catch(e) {}
+    });
     activeSourcesRef.current.clear();
 
     if (inputAudioContextRef.current) {
@@ -82,6 +85,7 @@ const AIChatWidget: React.FC = () => {
       outputAudioContextRef.current = null;
     }
 
+    nextStartTimeRef.current = 0;
     setIsConnecting(false);
     setIsVoiceMode(false);
     setIsSpeaking(false);
@@ -95,6 +99,7 @@ const AIChatWidget: React.FC = () => {
       const apiKey = process.env.API_KEY;
       if (!apiKey) throw new Error("API Key not found");
 
+      // Initialize a new instance right before making an API call to ensure current key
       const ai = new GoogleGenAI({ apiKey });
       
       // Initialize Audio Contexts
@@ -133,9 +138,9 @@ const AIChatWidget: React.FC = () => {
             processor.onaudioprocess = (e) => {
               const inputData = e.inputBuffer.getChannelData(0);
               const pcm16 = float32ToPCM16(inputData);
-              const base64Data = arrayBufferToBase64(pcm16.buffer);
+              const base64Data = encode(pcm16);
               
-              // Send data
+              // Solely rely on sessionPromise resolves to send data
               sessionPromise.then(session => {
                 session.sendRealtimeInput({
                   media: {
@@ -151,20 +156,26 @@ const AIChatWidget: React.FC = () => {
           },
           onmessage: async (message: LiveServerMessage) => {
             // Handle Audio Output
-            const audioData = message.serverContent?.modelTurn?.parts[0]?.inlineData?.data;
+            const audioData = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (audioData && outputAudioContextRef.current) {
               setIsSpeaking(true);
-              const audioBuffer = await decodeAudioData(audioData, outputAudioContextRef.current);
+              const audioBuffer = await decodeAudioData(
+                decode(audioData),
+                outputAudioContextRef.current,
+                24000,
+                1
+              );
               
               const source = outputAudioContextRef.current.createBufferSource();
               source.buffer = audioBuffer;
               source.connect(outputAudioContextRef.current.destination);
               
+              // Use nextStartTime cursor to track the end of audio playback queue for gapless playback
               const ctxTime = outputAudioContextRef.current.currentTime;
-              const startTime = Math.max(nextStartTimeRef.current, ctxTime);
+              nextStartTimeRef.current = Math.max(nextStartTimeRef.current, ctxTime);
               
-              source.start(startTime);
-              nextStartTimeRef.current = startTime + audioBuffer.duration;
+              source.start(nextStartTimeRef.current);
+              nextStartTimeRef.current = nextStartTimeRef.current + audioBuffer.duration;
               
               activeSourcesRef.current.add(source);
               source.onended = () => {
@@ -177,12 +188,12 @@ const AIChatWidget: React.FC = () => {
 
             // Handle interruptions (if user speaks over model)
             if (message.serverContent?.interrupted) {
-               activeSourcesRef.current.forEach(src => src.stop());
+               activeSourcesRef.current.forEach(src => {
+                 try { src.stop(); } catch(e) {}
+               });
                activeSourcesRef.current.clear();
                setIsSpeaking(false);
-               if (outputAudioContextRef.current) {
-                 nextStartTimeRef.current = outputAudioContextRef.current.currentTime;
-               }
+               nextStartTimeRef.current = 0;
             }
           },
           onclose: () => {

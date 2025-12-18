@@ -1,4 +1,5 @@
 import React from 'react';
+import { Mail, Phone } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../constants';
 
 const Footer: React.FC = () => {
@@ -7,15 +8,25 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6 text-center">
         <h2 className="text-3xl font-bold text-white mb-6">Let's Build Something Amazing</h2>
         <p className="text-slate-400 mb-8 max-w-xl mx-auto">
-          Currently open to new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+          Currently open to leadership and technical roles. Whether you have a project in mind or just want to discuss architectures, I'd love to connect.
         </p>
         
-        <a 
-          href={`mailto:${PORTFOLIO_DATA.socials.find(s => s.platform === 'Mail')?.url.replace('mailto:', '')}`}
-          className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white text-darker font-bold hover:bg-slate-200 transition-colors mb-12"
-        >
-          Say Hello
-        </a>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
+          <a 
+            href={`mailto:${PORTFOLIO_DATA.email}`}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-darker font-bold hover:bg-slate-200 transition-colors"
+          >
+            <Mail size={20} />
+            {PORTFOLIO_DATA.email}
+          </a>
+          <a 
+            href={`tel:${PORTFOLIO_DATA.phone}`}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-bold hover:bg-white/5 transition-colors"
+          >
+            <Phone size={20} />
+            {PORTFOLIO_DATA.phone}
+          </a>
+        </div>
 
         <div className="flex flex-col items-center gap-4 text-sm text-slate-600">
           <div className="flex gap-6">
@@ -32,7 +43,7 @@ const Footer: React.FC = () => {
             ))}
           </div>
           <p>© {new Date().getFullYear()} {PORTFOLIO_DATA.name}. All rights reserved.</p>
-          <p className="text-xs">Built with React, Tailwind & Gemini AI</p>
+          <p className="text-xs">Built with React, Tailwind & Gemini AI (Voice Enabled)</p>
         </div>
       </div>
     </footer>

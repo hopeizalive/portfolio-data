@@ -1,9 +1,9 @@
 import React from 'react';
-import { ArrowDown, Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Mail, Twitter, Phone } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../constants';
 
 const Hero: React.FC = () => {
-  const { name, role, tagline, socials } = PORTFOLIO_DATA;
+  const { name, role, tagline, socials, phone, email } = PORTFOLIO_DATA;
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
@@ -32,9 +32,20 @@ const Hero: React.FC = () => {
           Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">{name}</span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-slate-400 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+        <p className="text-xl md:text-2xl text-slate-400 mb-6 max-w-2xl mx-auto font-light leading-relaxed">
           {role}. {tagline}
         </p>
+
+        <div className="flex flex-col items-center gap-2 mb-8 text-slate-400">
+           <div className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer">
+             <Phone size={16} />
+             <a href={`tel:${phone}`}>{phone}</a>
+           </div>
+           <div className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer">
+             <Mail size={16} />
+             <a href={`mailto:${email}`}>{email}</a>
+           </div>
+        </div>
 
         <div className="flex items-center justify-center gap-4 mb-12">
           {socials.map((social) => (
@@ -59,10 +70,10 @@ const Hero: React.FC = () => {
             View My Work
           </a>
           <a 
-            href="#contact"
+            href="#experience"
             className="px-8 py-3.5 rounded-full bg-card border border-white/10 text-white font-semibold hover:bg-white/5 transition-all"
           >
-            Contact Me
+            View Experience
           </a>
         </div>
       </div>

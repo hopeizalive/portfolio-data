@@ -1,3 +1,26 @@
+
+// Manual implementation of base64 decoding as per @google/genai guidelines
+export const decode = (base64: string): Uint8Array => {
+  const binaryString = atob(base64);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+};
+
+// Manual implementation of base64 encoding as per @google/genai guidelines
+export const encode = (bytes: Uint8Array): string => {
+  let binary = '';
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+};
+
+// Converts Float32 audio data from the microphone to PCM16 bytes
 export const float32ToPCM16 = (float32Array: Float32Array): Uint8Array => {
   const buffer = new ArrayBuffer(float32Array.length * 2);
   const view = new DataView(buffer);
@@ -9,44 +32,22 @@ export const float32ToPCM16 = (float32Array: Float32Array): Uint8Array => {
   return new Uint8Array(buffer);
 };
 
-export const base64ToUint8Array = (base64: string): Uint8Array => {
-  const binaryString = atob(base64);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes;
-};
+// Decodes raw PCM audio bytes into an AudioBuffer for playback
+export async function decodeAudioData(
+  data: Uint8Array,
+  ctx: AudioContext,
+  sampleRate: number,
+  numChannels: number,
+): Promise<AudioBuffer> {
+  const dataInt16 = new Int16Array(data.buffer);
+  const frameCount = dataInt16.length / numChannels;
+  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
 
-export const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
+  for (let channel = 0; channel < numChannels; channel++) {
+    const channelData = buffer.getChannelData(channel);
+    for (let i = 0; i < frameCount; i++) {
+      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+    }
   }
-  return btoa(binary);
-};
-
-export const decodeAudioData = async (
-  base64Data: string,
-  audioContext: AudioContext
-): Promise<AudioBuffer> => {
-  const uint8Array = base64ToUint8Array(base64Data);
-  
-  // Create an Int16Array from the Uint8Array (assuming PCM16 little-endian)
-  const int16Array = new Int16Array(uint8Array.buffer);
-  
-  // Convert Int16 to Float32
-  const float32Array = new Float32Array(int16Array.length);
-  for (let i = 0; i < int16Array.length; i++) {
-    float32Array[i] = int16Array[i] / 32768.0;
-  }
-
-  // Create an AudioBuffer
-  const buffer = audioContext.createBuffer(1, float32Array.length, 24000); // Model output is usually 24kHz
-  buffer.copyToChannel(float32Array, 0);
-  
   return buffer;
-};
+}

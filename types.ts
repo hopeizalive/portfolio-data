@@ -12,6 +12,7 @@ export interface Experience {
   id: string;
   role: string;
   company: string;
+  location?: string;
   period: string;
   description: string[];
 }
@@ -33,6 +34,8 @@ export interface PortfolioData {
   tagline: string;
   about: string;
   location: string;
+  phone: string;
+  email: string;
   availability: string;
   skills: Skill[];
   experience: Experience[];
