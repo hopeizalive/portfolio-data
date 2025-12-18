@@ -6,7 +6,7 @@ const Projects: React.FC = () => {
   const { projects } = PORTFOLIO_DATA;
 
   return (
-    <section id="projects" className="py-24 relative">
+    <section id="projects" className="py-24 relative scroll-mt-20">
       <div className="container mx-auto px-6">
         <div className="mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Featured Work</h2>

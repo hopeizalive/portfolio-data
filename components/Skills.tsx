@@ -5,7 +5,7 @@ const Skills: React.FC = () => {
   const { skills, about } = PORTFOLIO_DATA;
 
   return (
-    <section id="about" className="py-24 bg-darker/50 relative">
+    <section id="about" className="py-24 bg-darker/50 relative scroll-mt-20">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
