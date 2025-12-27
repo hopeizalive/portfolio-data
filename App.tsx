@@ -7,15 +7,9 @@ import Footer from './components/Footer';
 import AIChatWidget from './components/AIChatWidget';
 
 const App: React.FC = () => {
-  // #region agent log
-  fetch('http://127.0.0.1:7244/ingest/813f001f-ddaf-4d47-965f-9d5a14ecfd58',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'App.tsx:9',message:'App component mounting',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H4'})}).catch(()=>{});
-  // #endregion
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/813f001f-ddaf-4d47-965f-9d5a14ecfd58',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'App.tsx:15',message:'App useEffect running',data:{apiKeyExists:!!(process.env as any).API_KEY,apiKeyValue:((process.env as any).API_KEY||'').substring(0,10)+'...'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H2'})}).catch(()=>{});
-    // #endregion
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };

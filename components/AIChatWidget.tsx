@@ -8,9 +8,6 @@ import { SYSTEM_PROMPT } from '../constants';
 import { float32ToPCM16, encode, decode, decodeAudioData } from '../utils/audioUtils';
 
 const AIChatWidget: React.FC = () => {
-  // #region agent log
-  fetch('http://127.0.0.1:7244/ingest/813f001f-ddaf-4d47-965f-9d5a14ecfd58',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AIChatWidget.tsx:10',message:'AIChatWidget component mounting',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H4'})}).catch(()=>{});
-  // #endregion
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -95,17 +92,11 @@ const AIChatWidget: React.FC = () => {
   };
 
   const startVoiceSession = async () => {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/813f001f-ddaf-4d47-965f-9d5a14ecfd58',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AIChatWidget.tsx:94',message:'startVoiceSession entry',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H4'})}).catch(()=>{});
-    // #endregion
     try {
       setIsVoiceMode(true);
       setIsConnecting(true);
 
       const apiKey = process.env.API_KEY;
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/813f001f-ddaf-4d47-965f-9d5a14ecfd58',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AIChatWidget.tsx:99',message:'Voice session API key check',data:{apiKeyExists:!!apiKey,apiKeyLength:apiKey?.length||0},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H1'})}).catch(()=>{});
-      // #endregion
       if (!apiKey || apiKey.trim() === '' || apiKey === 'undefined') {
         throw new Error('GEMINI_API_KEY is not set. Please create a .env file with GEMINI_API_KEY=your_api_key');
       }
@@ -221,9 +212,6 @@ const AIChatWidget: React.FC = () => {
       sessionRef.current = await sessionPromise;
 
     } catch (error) {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/813f001f-ddaf-4d47-965f-9d5a14ecfd58',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AIChatWidget.tsx:212',message:'Voice session error',data:{errorMessage:error instanceof Error?error.message:String(error),errorName:error instanceof Error?error.name:'Unknown'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H1'})}).catch(()=>{});
-      // #endregion
       console.error("Failed to start voice session:", error);
       stopVoiceSession();
     }
