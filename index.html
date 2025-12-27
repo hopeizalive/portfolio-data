@@ -57,19 +57,18 @@
         40% { transform: scale(1); }
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
-  }
-}
-</script>
+  <!-- Importmap removed - Vite bundles dependencies from node_modules -->
 </head>
   <body class="bg-darker text-slate-300 font-sans antialiased selection:bg-primary selection:text-white">
     <div id="root"></div>
+    <!-- Vite entry point - loads and executes the React app -->
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      // #region agent log
+      try {
+        fetch('http://127.0.0.1:7244/ingest/813f001f-ddaf-4d47-965f-9d5a14ecfd58',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:script',message:'HTML loaded, script executing',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H5'})}).catch(e=>console.error('Debug log failed:',e));
+      } catch(e) { console.error('Debug log error:', e); }
+      // #endregion
+    </script>
   </body>
 </html>

@@ -1,9 +1,17 @@
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import { appendFileSync } from 'fs';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    // #region agent log
+    const logPath = 'd:\\Git_Projects\\portfolio\\portfolio-data\\.cursor\\debug.log';
+    try {
+      const logEntry = JSON.stringify({location:'vite.config.ts:7',message:'Vite config loading env',data:{mode,geminiApiKeyExists:!!env.GEMINI_API_KEY,geminiApiKeyLength:env.GEMINI_API_KEY?.length||0},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H2'})+'\n';
+      appendFileSync(logPath, logEntry);
+    } catch(e) {}
+    // #endregion
     return {
       server: {
         port: 3000,

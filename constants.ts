@@ -124,28 +124,28 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "Halkar.com Platform",
       description: "A large-scale Java PaaS platform for business management, featuring complex modules for scheduling, meetings, and partner agreements.",
       tags: ["Java", "PaaS", "Workflow", "MVC"],
-      imageUrl: "https://picsum.photos/800/600?random=11",
+      imageUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Cdefs%3E%3ClinearGradient id='javaGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ED8B00;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23F89820;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23javaGrad)'/%3E%3Ctext x='400' y='280' font-family='Arial, sans-serif' font-size='120' font-weight='bold' fill='white' text-anchor='middle' opacity='0.3'%3EJAVA%3C/text%3E%3C/svg%3E",
     },
     {
       id: "proj-2",
       title: "Individual Life & Banca Solutions",
       description: "Sophisticated insurance product suite developed at Centegy Technologies, focusing on high-reliability backend and module integration.",
       tags: ["Java", "FinTech", "Backend"],
-      imageUrl: "https://picsum.photos/800/600?random=12",
+      imageUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Cdefs%3E%3ClinearGradient id='javaGrad2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ED8B00;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23F89820;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23javaGrad2)'/%3E%3Ctext x='400' y='280' font-family='Arial, sans-serif' font-size='120' font-weight='bold' fill='white' text-anchor='middle' opacity='0.3'%3EJAVA%3C/text%3E%3C/svg%3E",
     },
     {
       id: "proj-3",
       title: "Cloud-Oriented MVC Architectures",
       description: "Series of scalable system architectures designed for FWU AG, implementing cloud-native patterns and strict performance metrics.",
       tags: ["Architecture", "MVC", "Cloud", "SQA"],
-      imageUrl: "https://picsum.photos/800/600?random=13",
+      imageUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Cdefs%3E%3ClinearGradient id='javaGrad3' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ED8B00;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23F89820;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23javaGrad3)'/%3E%3Ctext x='400' y='280' font-family='Arial, sans-serif' font-size='120' font-weight='bold' fill='white' text-anchor='middle' opacity='0.3'%3EJAVA%3C/text%3E%3C/svg%3E",
     },
     {
       id: "proj-4",
       title: "Dimensional Enterprise Backend",
       description: "Modern backend optimization for enterprise systems utilizing a hybrid stack of Node.js and .NET Core.",
       tags: ["Node.js", ".NET Core", "MongoDB", "Firebase"],
-      imageUrl: "https://picsum.photos/800/600?random=14",
+      imageUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Cdefs%3E%3ClinearGradient id='dotnetGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23512BD4;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%237028D4;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23dotnetGrad)'/%3E%3Ctext x='400' y='280' font-family='Arial, sans-serif' font-size='100' font-weight='bold' fill='white' text-anchor='middle' opacity='0.3'%3E.NET%3C/text%3E%3C/svg%3E",
     }
   ],
   socials: [
