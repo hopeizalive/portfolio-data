@@ -6,7 +6,7 @@ const Experience: React.FC = () => {
   const { experience } = PORTFOLIO_DATA;
 
   return (
-    <section id="experience" className="py-24">
+    <section id="experience" className="py-24 scroll-mt-20">
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Work Experience</h2>

@@ -16,7 +16,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden pt-16">
+    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden pt-16 scroll-mt-20">
       {/* Background Blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] animate-pulse"></div>
