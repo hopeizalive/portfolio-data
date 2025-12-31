@@ -97,8 +97,12 @@ const AIChatWidget: React.FC = () => {
       setIsConnecting(true);
 
       const apiKey = process.env.API_KEY;
-      if (!apiKey || apiKey.trim() === '' || apiKey === 'undefined') {
-        throw new Error('GEMINI_API_KEY is not set. Please create a .env file with GEMINI_API_KEY=your_api_key');
+      if (!apiKey || apiKey.trim() === '' || apiKey === 'undefined' || apiKey === 'null') {
+        console.error("API_KEY validation failed:", { 
+          exists: !!apiKey, 
+          value: apiKey?.substring(0, 5) + '...' 
+        });
+        throw new Error('GEMINI_API_KEY is not set. Please create a .env file in the root directory with: GEMINI_API_KEY=your_api_key');
       }
 
       // Initialize a new instance right before making an API call to ensure current key
@@ -244,11 +248,11 @@ const AIChatWidget: React.FC = () => {
       };
       
       setMessages(prev => [...prev, newBotMessage]);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error("Error in handleSendMessage:", error);
       const errorMessage: ChatMessage = {
         role: 'model',
-        text: "Sorry, I encountered an error. Please check the console or try again.",
+        text: error?.message || "Sorry, I encountered an error. Please check the console or try again.",
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
